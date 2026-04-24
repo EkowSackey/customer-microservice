@@ -26,6 +26,11 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getById(id));
     }
 
+    @GetMapping("/username/{username}")
+    public ResponseEntity<CustomerResponse> getByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(customerService.getProfile(username));
+    }
+
     @PutMapping("/me")
     public ResponseEntity<CustomerResponse> updateProfile(
             Authentication auth, @RequestBody RegisterRequest request) {
