@@ -45,10 +45,10 @@ public class CustomerService {
                 .role(Customer.Role.CUSTOMER)
                 .build();
 
-        customerRepository.save(customer);
+        Customer savedCustomer = customerRepository.save(customer);
 
-        String token = jwtUtil.generateToken(customer.getUsername(), customer.getRole().name());
-        return new AuthResponse(token, customer.getId(), customer.getUsername(), customer.getRole().name());
+        String token = jwtUtil.generateToken(savedCustomer.getUsername(), savedCustomer.getRole().name());
+        return new AuthResponse(token, savedCustomer.getId(), savedCustomer.getUsername(), savedCustomer.getRole().name());
     }
 
     public AuthResponse login(AuthRequest request) {

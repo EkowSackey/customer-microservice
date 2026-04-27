@@ -31,10 +31,6 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractUsername(String token) {
-        return extractClaims(token).getSubject();
-    }
-
     public boolean validateToken(String token) {
         try {
             extractClaims(token);
@@ -44,7 +40,11 @@ public class JwtUtil {
         }
     }
 
-    private Claims extractClaims(String token) {
+    public String extractUsername(String token) {
+        return extractClaims(token).getSubject();
+    }
+
+    public Claims extractClaims(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
