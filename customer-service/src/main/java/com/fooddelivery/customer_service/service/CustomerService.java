@@ -78,7 +78,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerResponse updateProfile(String username, RegisterRequest request) {
+    public CustomerResponse updateProfile(String username, UpdateProfileRequest request) {
         Customer customer = customerRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "username", username));
 

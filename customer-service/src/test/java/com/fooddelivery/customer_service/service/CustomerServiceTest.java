@@ -175,7 +175,7 @@ class CustomerServiceTest {
         when(customerRepository.findByUsername("testuser")).thenReturn(Optional.of(customer));
         when(customerRepository.save(any(Customer.class))).thenReturn(customer);
 
-        RegisterRequest updateRequest = new RegisterRequest();
+        UpdateProfileRequest updateRequest = new UpdateProfileRequest();
         updateRequest.setFirstName("UpdatedName");
 
         CustomerResponse response = customerService.updateProfile("testuser", updateRequest);
@@ -189,7 +189,7 @@ class CustomerServiceTest {
     void updateProfile_NotFound_ThrowsException() {
         when(customerRepository.findByUsername("unknown")).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> customerService.updateProfile("unknown", new RegisterRequest()));
+        assertThrows(ResourceNotFoundException.class, () -> customerService.updateProfile("unknown", new UpdateProfileRequest()));
         verify(customerRepository, never()).save(any(Customer.class));
     }
 }

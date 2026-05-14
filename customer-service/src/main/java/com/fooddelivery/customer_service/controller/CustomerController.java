@@ -3,6 +3,7 @@ package com.fooddelivery.customer_service.controller;
 import com.fooddelivery.customer_service.dto.*;
 import com.fooddelivery.customer_service.service.CustomerService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,18 +23,20 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('SERVICE')")
     public ResponseEntity<CustomerResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.getById(id));
     }
 
     @GetMapping("/username/{username}")
+    @PreAuthorize("hasRole('SERVICE')")
     public ResponseEntity<CustomerResponse> getByUsername(@PathVariable String username) {
         return ResponseEntity.ok(customerService.getProfile(username));
     }
 
     @PutMapping("/me")
     public ResponseEntity<CustomerResponse> updateProfile(
-            Authentication auth, @RequestBody RegisterRequest request) {
+            Authentication auth, @RequestBody UpdateProfileRequest request) {
         return ResponseEntity.ok(customerService.updateProfile(auth.getName(), request));
     }
 }
